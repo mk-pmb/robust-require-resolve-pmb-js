@@ -1,0 +1,33 @@
+{ "name": "robust-require-resolve-pmb",
+  "version": "0.1.0",
+  "description": "My attempt to make a less annoying require.resolve for Node.js v12+",
+  "keywords": ["require", "resolve"],
+
+  "author": "M.K. (https://github.com/mk-pmb)",
+  "homepage": "https://github.com/mk-pmb/robust-require-resolve-pmb-js/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mk-pmb/robust-require-resolve-pmb-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mk-pmb/robust-require-resolve-pmb-js/issues"
+  },
+  "contributors": [],
+
+  "private": true, "license": "ISC",
+
+  "main": "rrr.js",
+  "scripts": {
+    "lint": "elp",
+    "test": "bash test/all.mjs"
+  },
+  "directories": { "test": "test" },
+  "eslintConfig": { "extends": "nodejs-pmb" },
+
+  "dependencies": {},
+  "devDependencies": {
+  },
+
+
+  "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"
+}
