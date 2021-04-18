@@ -5,7 +5,7 @@ robust-require-resolve-pmb
 <!--/#echo -->
 
 <!--#echo json="package.json" key="description" -->
-My attempt to make a less annoying require.resolve for Node.js v12+
+My attempt to make a less annoying require.resolve for Node.js v12+.
 <!--/#echo -->
 
 
@@ -15,7 +15,14 @@ API
 
 This module exports one function:
 
-### resolve-pmb(id)
+### makeResolver(rqr)
+
+Returns the `resolve` function described below,
+based on `rqr` which should be the calling module's `require` function.
+
+
+
+### resolve(id)
 
 Find the absolute path of module `id`.
 
