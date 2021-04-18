@@ -44,6 +44,17 @@ Known issues
 
 
 
+Similar projects
+----------------
+
+* `resolve-package-path`:
+  Also reliably finds a `package.json` even with custom exports, but
+  v3.1.0 seems to prefer the global version over the project-local version of
+  same-named dependencies. (This might be intended behavior, see their docs.)
+
+
+
+
 &nbsp;
 
 
