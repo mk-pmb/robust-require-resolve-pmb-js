@@ -43,9 +43,19 @@ EX.chkManif_ERR_PACKAGE_PATH_NOT_EXPORTED = function (err, id) {
     return false;
   }
   subPath = parts.slice(nManifParts).join('/');
+  if (!manif) { manif = EX.parseErrMsgNotDefinedByExports(err, subPath); }
+  if (!manif) { return false; }
   abs = pathLib.resolve(manif, '..', subPath);
   if (!syncExists(abs)) { return false; }
   return abs;
+};
+
+
+EX.parseErrMsgNotDefinedByExports = function (err, subPath) {
+  var parts = String(err.message).split("' is not defined by \"exports\" in ");
+  if (parts.length !== 2) { return false; }
+  if (parts[0] !== ("Package subpath './" + subPath)) { return false; }
+  return parts[1];
 };
 
 

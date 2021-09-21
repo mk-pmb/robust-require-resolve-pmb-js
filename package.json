@@ -1,5 +1,5 @@
 { "name": "robust-require-resolve-pmb",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "My attempt to make a less annoying require.resolve for Node.js v12+.",
   "keywords": ["require", "resolve"],
 
