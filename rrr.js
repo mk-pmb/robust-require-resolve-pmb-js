@@ -3,11 +3,18 @@
 /* -*- tab-width: 2 -*- */
 'use strict';
 
-var findManif = require('resolve-package-path'), EX;
+var EX, findManif = require('resolve-package-path'),
+  nodeFs = require('fs'),
+  syncExists = nodeFs.existsSync,
+  // ^- Using sync fs functions is acceptable here because
+  //    require.resolve is sync itself.
+  pathLib = require('path');
+
 
 EX = function makeResolver(rqr) {
   return function resolve(id) { return EX.resolve(rqr, id); };
 };
+
 
 EX.resolve = function (rqr, id) {
   var err, fix;
@@ -18,21 +25,28 @@ EX.resolve = function (rqr, id) {
   }
   if (!err) { throw new TypeError('Caught a false-y error: ' + err); }
 
-  fix = EX.chkManif(err, id);
+  fix = EX['chkManif_' + err.code];
+  fix = (fix && fix(err, id));
   if (fix) { return fix; }
 
   throw err;
 };
 
-EX.chkManif = function (err, id) {
-  if (err.code !== 'ERR_PACKAGE_PATH_NOT_EXPORTED') { return; }
-  var parts = id.split(/\//), nParts = parts.length, expectedParts = 2;
-  if (id.slice(0, 1) === '@') { expectedParts = 3; }
-  if (nParts !== expectedParts) { return; }
-  if (parts.slice(-1)[0] !== 'package.json') { return; }
+
+EX.chkManif_ERR_PACKAGE_PATH_NOT_EXPORTED = function (err, id) {
+  var parts = id.split(/\//), nManifParts = 1, manif, subPath, abs;
+  if (id.slice(0, 1) === '@') { nManifParts += 1; }
+  manif = parts.slice(0, nManifParts).join('/');
   try {
-    return findManif(parts.slice(0, -1).join('/'));
-  } catch (ignore) {}
+    manif = findManif(manif);
+  } catch (ignore) {
+    return false;
+  }
+  subPath = parts.slice(nManifParts).join('/');
+  abs = pathLib.resolve(manif, '..', subPath);
+  if (!syncExists(abs)) { return false; }
+  return abs;
 };
+
 
 module.exports = EX;
