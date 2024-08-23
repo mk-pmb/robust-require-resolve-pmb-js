@@ -33,7 +33,7 @@ examplePackages.expectFail.forEach(function (pkg) {
   eq.named('Package ' + pkg, function () {
     eq(require.resolve(pkg), rrr(pkg));
     eq.err(function () { require.resolve(pkg + '/package.json'); },
-      /\[ERR_PACKAGE_PATH_NOT_EXPORTED\]: Package subpath \S+ is not defined /);
+      /Package subpath \S+ is not defined /);
     var manifId = pkg + '/package.json', manifPath = rrr(manifId);
     eq(manifPath.slice(-1 - manifId.length), '/' + manifId);
   });

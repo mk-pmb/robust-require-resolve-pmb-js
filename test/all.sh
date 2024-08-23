@@ -7,6 +7,7 @@ function all_tests () {
   local SELFFILE="$(readlink -m -- "$BASH_SOURCE")"
   local SELFPATH="$(dirname -- "$SELFFILE")"
   cd -- "$SELFPATH" || return $?
+  exec </dev/null
 
   local TEST_FUNCS=()
   readarray -t TEST_FUNCS < <(
